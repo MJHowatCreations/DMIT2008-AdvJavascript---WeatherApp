@@ -1,7 +1,15 @@
 // Enter a location for weather information
 
 //need an event listener that listens to the click of the button and grabs the id="location" text value
+document.querySelector('[type="submit"]').addEventListener('click', function(evt){
+    var locationForm = document.querySelector('[name="location"]');
 
+    document.querySelector('h1').innerHTML = locationForm.value; 
+
+
+    
+    evt.preventDefault(); 
+})
 
 
 //View current climate information for the location
