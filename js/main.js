@@ -1,5 +1,7 @@
 // Enter a location for weather information
 
+//need an event listener that listens to the click of the button and grabs the id="location" text value
+
 
 
 //View current climate information for the location
