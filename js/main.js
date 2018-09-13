@@ -6,19 +6,25 @@
     'use strict';
 
     function displayWeather(data, $el) {
-        var $loc = $($el).find('.details>.location'),
+        const $loc = $($el).find('.details>.location'),
             $date = $($el).find('.details>.date'),
             $conditions = $($el).find('.details>.conditions'),
             $currentTemp = $($el).find('.details>.temp'),
             $sunrise = $($el).find('.details>.sunrise'),
             $sunset = $($el).find('.details>.sunset');
 
-            $loc.text(data.location.city + ', ' + data.location.region);
-            $date.text(data.lastBuildDate);
-            $conditions.text(data.item.condition.text);
-            $currentTemp.text(data.item.condition.temp);
-            $sunrise.text(data.astronomy.sunrise);
-            $sunset.text(data.astronomy.sunset);
+        $loc.text(data.location.city + ', ' + data.location.region);
+        $date.text(data.lastBuildDate);
+        $conditions.text(data.item.condition.text);
+        $currentTemp.text(data.item.condition.temp);
+        $sunrise.text(data.astronomy.sunrise);
+        $sunset.text(data.astronomy.sunset);
+
+    }
+
+    function displayForecast(data, $el) {
+        
+
 
     }
 
@@ -35,6 +41,9 @@
             displayWeather(data, $('.weather-display'));
         });
     });
+
+
+
 
 
 }(jQuery));
