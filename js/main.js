@@ -1,64 +1,74 @@
-// Enter a location for weather information
-
-//need an event listener that listens to the click of the button and grabs the id="location" text value
-
-(function($) {
+/**
+ * Simple weather display application for demonstrating AJAX for JSON and
+ * best practices for JavaScript development.  The script makes use of the 
+ * Yahoo! weather API.
+ *
+ * @param {object} $ - jQuery dependency (or compatible API such as zepto)
+ */
+(function ($) {
     'use strict';
 
-    function displayWeather(data, $el) {
-        const $loc = $($el).find('.details>.location'),
-            $date = $($el).find('.details>.date'),
-            $conditions = $($el).find('.details>.conditions'),
-            $currentTemp = $($el).find('.details>.temp'),
-            $sunrise = $($el).find('.details>.sunrise'),
-            $sunset = $($el).find('.details>.sunset');
+    /**
+     * Displays a weather forecast for a given location.
+     * @param {Object[]} data - The array of forecast weather objects.
+     * @param {Object} $el - The jQuery reference to the display DOM element.
+     */
+    function displayForecast(data, $el) {
+        var output = '<ul>',
+            i,
+            len;
 
+        for (i = 0, len = data.length; i < len; i += 1) {
+            output += '<li>';
+            output += data[i].day + ' ' + data[i].date + ': hi| ' + data[i].high + ', low| ' + data[i].low;
+            output += '</li>';
+        }
+
+        output += '</ul>';
+
+        $el.html(output);
+    }
+
+    /**
+     * Displays the current weather conditions for a given location.
+     * @param {Object} data - The weather data object.
+     * @param {Object} $el - The jQuery reference to the display DOM element.
+     * @param {boolean} showForecast - Whether to display the forecast or not
+     */
+    function displayWeather(data, $el, showForecast) {
+        var $loc = $el.find('.details>.location'),
+            $date = $el.find('.details>.date'),
+            $conditions = $el.find('.details>.conditions'),
+            $temp = $el.find('.details>.temp'),
+            $sunrise = $el.find('.details>.sunrise'),
+            $sunset = $el.find('.details>.sunset'),
+            $forecast = $el.find('.forecast');
+
+        // display the current weather data
         $loc.text(data.location.city + ', ' + data.location.region);
-        $date.text(data.lastBuildDate);
+        $date.text(data.lastBuildDate.split(' ').splice(0, 3).join(' '));
         $conditions.text(data.item.condition.text);
-        $currentTemp.text(data.item.condition.temp);
+        $temp.text(data.item.condition.temp);
         $sunrise.text(data.astronomy.sunrise);
         $sunset.text(data.astronomy.sunset);
 
+        if (!!showForecast) {
+            // display the forecast
+            displayForecast(data.item.forecast, $forecast);
+        }
     }
 
-    function displayForecast(data, $el) {
-        
+    // Event listener for retrieving a weather forecast
+    $('.frm.weather').on('submit', function (e) {
+        e.preventDefault();
 
-
-    }
-
-    $('.frm.weather').on('submit', function(evt) {
-        const   location = $(evt.target).find('[name=location]').val(),
-                query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + location + "') and u = 'c'",
-                endpoint = "https://query.yahooapis.com/v1/public/yql?q=" + query + "&format=json&env=store://datatables.org/alltableswithkeys";
-        
-        
-        evt.preventDefault(); 
+        var location = $(e.target).find('[name=location]').val(),
+            query = 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + location + '") and u="c"',
+            endpoint = 'https://query.yahooapis.com/v1/public/yql?q=' + query + '&format=json&env=store/datatables.org/alltableswithkeys'; 
 
         $.getJSON(endpoint, function (data) {
             data = data.query.results.channel;
-            displayWeather(data, $('.weather-display'));
+            displayWeather(data, $('.weather-display'), true);
         });
     });
-
-
-
-
-
 }(jQuery));
-
-
-//View current climate information for the location
-
-
-//yahoo api example "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="london, on") and u = 'c'" we receive a json object
-//current temp object is "item"
-
-
-
-//View the 5 day forecast for the location
-
-//json object contains forecast list with 5 values for the next 5 days. key values pairs are: "code" "date" "day" "high" "low" "text"
-
-
