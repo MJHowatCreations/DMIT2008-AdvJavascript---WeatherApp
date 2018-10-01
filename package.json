@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx babel js/main.es6.js --out-dir js/dist"
+    "build": "npx babel js/main.es6.js --watch --out-file js/dist/main.js"
   },
   "repository": {
     "type": "git",
