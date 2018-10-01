@@ -7,7 +7,8 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx babel js/main.es6.js --out-dir js/dist"
   },
   "repository": {
     "type": "git",
