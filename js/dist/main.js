@@ -10,8 +10,6 @@
    *
    *
    */
-  var source = document.querySelector('#project-template').innerHTML;
-  var template = Handlebars.compile(source);
   Handlebars.registerHelper('currentDate', function () {
     return new Date().toLocaleString();
   });
@@ -19,11 +17,11 @@
    * Displays the current weather conditions for a given location.
    * @param {Object} data - The weather data object.
    * @param {{String}} el - The location we are appending the display weather to.
-   * @param {boolean} showForecast - Whether to display the forecast or not
-  */
+   *
+   **/
 
-  var displayWeather = function displayWeather(data, el, showForecast) {
-    el.innerHTML = template(data);
+  var displayWeather = function displayWeather(data, el) {
+    el.innerHTML = Handlebars.templates['project'](data);
   };
   /**
    * Grabs the text from the input and makes a Yahoo API request string then creates a AJAX request
@@ -40,7 +38,7 @@
     }) // see Response.json() in the Fetch API spec
     .then(function (json) {
       json = json.query.results.channel;
-      displayWeather(json, document.querySelector('.weather-display'), true);
+      displayWeather(json, document.querySelector('.weather-display'));
     });
   });
   /**

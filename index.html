@@ -33,23 +33,9 @@
   </section>
   
 
-  <script id="project-template" type="text/x-handlebars-template">
-    <h1>Weather Update</h1>
-    <div>Location: {{location.city}}, {{location.region}}</div>
-    <div>Date: {{currentDate}}</div>
-    <div>Conditions: {{item.condition.text}}</div>
-    <div>Current Temp: {{item.condition.temp}} &#176 C</div>
-    <div>Sunrise: {{astronomy.sunrise}}</div>
-    <div>Sunset: {{astronomy.sunset}}</div>
-    <div>
-      <ul>
-        {{#each item.forecast}}
-        <li>{{day}} {{date}} : hi | {{high}} &#176 C, low | {{low}} &#176 C</li>
-        {{/each}}
-      </ul>
-    </div>  
-  </script>
-  <script src="js/vendor/handlebars-v4.0.12.js"></script>
+
+  <script src="js/vendor/handlebars.runtime-v4.0.12.js"></script>
+  <script src="js/dist/project-template.js"></script>  
   <script src="js/plugins.js"></script>
   <script src="js/dist/main.js"></script>
 </body>

@@ -1,0 +1,14 @@
+    <h1>Weather Update</h1>
+    <div>Location: {{location.city}}, {{location.region}}</div>
+    <div>Date: {{currentDate}}</div>
+    <div>Conditions: {{item.condition.text}}</div>
+    <div>Current Temp: {{item.condition.temp}} &#176 C</div>
+    <div>Sunrise: {{astronomy.sunrise}}</div>
+    <div>Sunset: {{astronomy.sunset}}</div>
+    <div>
+      <ul>
+        {{#each item.forecast}}
+        <li>{{day}} {{date}} : hi | {{high}} &#176 C, low | {{low}} &#176 C</li>
+        {{/each}}
+      </ul>
+    </div>  

@@ -5,8 +5,6 @@
  *
  *
  */
-let source = document.querySelector('#project-template').innerHTML;
-let template = Handlebars.compile(source);
 Handlebars.registerHelper('currentDate', () => {
     return new Date().toLocaleString()
 });
@@ -16,11 +14,10 @@ Handlebars.registerHelper('currentDate', () => {
  * Displays the current weather conditions for a given location.
  * @param {Object} data - The weather data object.
  * @param {{String}} el - The location we are appending the display weather to.
- * @param {boolean} showForecast - Whether to display the forecast or not
-*/
-const displayWeather = (data, el, showForecast) => {
-    el.innerHTML = template(data);
-
+ *
+ **/
+const displayWeather = (data, el) => {
+    el.innerHTML = Handlebars.templates['project'](data);
   };
 
 /**
@@ -37,7 +34,7 @@ document.querySelector('.frm.weather').addEventListener('submit', (e) => {
         .then(data => data.json()) // see Response.json() in the Fetch API spec
         .then(json => {
             json = json.query.results.channel;
-            displayWeather(json, document.querySelector('.weather-display'), true);
+            displayWeather(json, document.querySelector('.weather-display'));
     });
 });
  
