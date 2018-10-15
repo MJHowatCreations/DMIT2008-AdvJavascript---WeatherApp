@@ -24,17 +24,34 @@
 
   <section class="weather-display">
       <h1>Weather Update</h1>
-      <div class="details">Location: <span class="location"></span></div>
-      <div class="details">Date: <span class="date"></span></div>
-      <div class="details">Conditions: <span class="conditions"></span></div>
-      <div class="details">Current Temp: <span class="temp"></span></div>
-      <div class="details">Sunrise: <span class="sunrise"></span></div>
-      <div class="details">Sunset: <span class="sunset"></span></div>
-      <div class="forecast"></div>
+      <div>Location:</div>
+      <div>Date:</div>
+      <div>Conditions: </div>
+      <div>Current Temp:</div>
+      <div>Sunrise:</div>
+      <div>Sunset:</div>
   </section>
   
+
+  <script id="project-template" type="text/x-handlebars-template">
+    <h1>Weather Update</h1>
+    <div>Location: {{location.city}}, {{location.region}}</div>
+    <div>Date: {{currentDate}}</div>
+    <div>Conditions: {{item.condition.text}}</div>
+    <div>Current Temp: {{item.condition.temp}} &#176 C</div>
+    <div>Sunrise: {{astronomy.sunrise}}</div>
+    <div>Sunset: {{astronomy.sunset}}</div>
+    <div>
+      <ul>
+        {{#each item.forecast}}
+        <li>{{day}} {{date}} : hi | {{high}} &#176 C, low | {{low}} &#176 C</li>
+        {{/each}}
+      </ul>
+    </div>  
+  </script>
+  <script src="js/vendor/handlebars-v4.0.12.js"></script>
   <script src="js/plugins.js"></script>
-  <script src="js/dist/main.es6.js"></script>
+  <script src="js/dist/main.js"></script>
 </body>
 
 </html>

@@ -5,12 +5,52 @@
  *
  *
  */
+let source = document.querySelector('#project-template').innerHTML;
+let template = Handlebars.compile(source);
+Handlebars.registerHelper('currentDate', () => {
+    return new Date().toLocaleString()
+});
+
+
+/**
+ * Displays the current weather conditions for a given location.
+ * @param {Object} data - The weather data object.
+ * @param {{String}} el - The location we are appending the display weather to.
+ * @param {boolean} showForecast - Whether to display the forecast or not
+*/
+const displayWeather = (data, el, showForecast) => {
+    el.innerHTML = template(data);
+
+  };
+
+/**
+ * Grabs the text from the input and makes a Yahoo API request string then creates a AJAX request
+ * @param {Object} e - The default form submission event
+*/
+document.querySelector('.frm.weather').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    let location = e.target.querySelector('[name=location]').value,
+        query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="c"&format=json&env=store/datatables.org/alltableswithkeys`;
+
+    fetch(`https://query.yahooapis.com/v1/public/yql?q=${query}`)
+        .then(data => data.json()) // see Response.json() in the Fetch API spec
+        .then(json => {
+            json = json.query.results.channel;
+            displayWeather(json, document.querySelector('.weather-display'), true);
+    });
+});
+ 
+
+
+
 
 /**
  * Displays a weather forecast for a given location.
  * @param {Object[]} data - The array of forecast weather objects.
  * @param {Object} location - The location to display weather data.
 */
+/*
 const displayForecast = (data, location) => {
     let output = '<ul>';
 
@@ -21,60 +61,7 @@ const displayForecast = (data, location) => {
     output += '</ul>';
     location.innerHTML = output;
 }
-
-/**
- * Displays the current weather conditions for a given location.
- * @param {Object} data - The weather data object.
- * @param {boolean} showForecast - Whether to display the forecast or not
 */
-const displayWeather = (data, showForecast) => {
-    const   loc = document.querySelector('.details>.location'),
-            date = document.querySelector('.details>.date'),
-            conditions = document.querySelector('.details>.conditions'),
-            temp = document.querySelector('.details>.temp'),
-            sunrise = document.querySelector('.details>.sunrise'),
-            sunset = document.querySelector('.details>.sunset'),
-            forecast = document.querySelector('.forecast');
-
-    // display the current weather data
-
-    loc.innerHTML = `${data.location.city}, ${data.location.region}`;
-    date.innerHTML = `${new Date().toLocaleString()}`
-    conditions.innerHTML = `${data.item.condition.text}`;
-    temp.innerHTML = `${data.item.condition.temp}&#176 C`;
-    sunrise.innerHTML =`${data.astronomy.sunrise}`;
-    sunset.innerHTML = `${data.astronomy.sunset}`;
-
-    if (!!showForecast) {
-        // display the forecast
-        displayForecast(data.item.forecast, forecast);
-    }
-}
-/**
- * Grabs the text from the input and makes a Yahoo API request string then creates a AJAX request
- * @param {Object} evt - The default form submission event
-*/
-document.querySelector('.frm.weather').addEventListener('submit', (evt) => {
-    const   location = evt.target[0].value,
-    query = 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + location + '") and u="c"',
-    endpoint = 'https://query.yahooapis.com/v1/public/yql?q=' + query + '&format=json&env=store/datatables.org/alltableswithkeys'; 
-    fetch(endpoint)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error(`Request failed - ${response.status} : ${response.statusText} `);
-            }
-        })
-        .then(data => { displayWeather(data.query.results.channel, true) })
-        .catch(err => {
-            document.querySelector('.forecast').innerHTML = `<ul><li>${err}</li></ul>`
-        });
-    evt.preventDefault();
-});
-
- 
-
 
 /**
  * An explict usage of Promises
@@ -105,4 +92,26 @@ const fetchJSON = (url) => {
         xhr.send(null);
     });
 };
+*/
+
+/*
+const displayWeather = (data, showForecast) => {
+    const   loc = document.querySelector('.details>.location'),
+            date = document.querySelector('.details>.date'),
+            conditions = document.querySelector('.details>.conditions'),
+            temp = document.querySelector('.details>.temp'),
+            sunrise = document.querySelector('.details>.sunrise'),
+            sunset = document.querySelector('.details>.sunset'),
+            forecast = document.querySelector('.forecast');
+
+    // display the current weather data
+
+    loc.innerHTML = `${data.location.city}, ${data.location.region}`;
+    date.innerHTML = `${new Date().toLocaleString()}`
+    conditions.innerHTML = `${data.item.condition.text}`;
+    temp.innerHTML = `${data.item.condition.temp}&#176 C`;
+    sunrise.innerHTML =`${data.astronomy.sunrise}`;
+    sunset.innerHTML = `${data.astronomy.sunset}`;
+}
+
 */
