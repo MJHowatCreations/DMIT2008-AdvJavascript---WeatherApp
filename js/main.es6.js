@@ -8,6 +8,13 @@
 Handlebars.registerHelper('currentDate', () => {
     return new Date().toLocaleString()
 });
+Handlebars.registerHelper('temperature', (temperatureScale = 'c') => {
+    if (temperatureScale == 'c')
+        return '&#176 C';
+    else
+        return '&#176 F';
+
+});
 
 
 /**
@@ -26,9 +33,9 @@ const displayWeather = (data, el) => {
 */
 document.querySelector('.frm.weather').addEventListener('submit', (e) => {
     e.preventDefault();
-
+    let temperatureScale = 'c'
     let location = e.target.querySelector('[name=location]').value,
-        query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="c"&format=json&env=store/datatables.org/alltableswithkeys`;
+        query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="${temperatureScale}"&format=json&env=store/datatables.org/alltableswithkeys`;
 
     fetch(`https://query.yahooapis.com/v1/public/yql?q=${query}`)
         .then(data => data.json()) // see Response.json() in the Fetch API spec
