@@ -5,7 +5,7 @@
     <div>Current Temp: {{item.condition.temp}} {{temperature}}</div>
     <div>Sunrise: {{astronomy.sunrise}}</div>
     <div>Sunset: {{astronomy.sunset}}</div>
-    <div>
+    <div class="forecast">
       <ul>
         {{#each item.forecast}}
         <li>{{day}} {{date}} : hi | {{high}} {{temperature}}, low | {{low}} {{temperature}}</li>
