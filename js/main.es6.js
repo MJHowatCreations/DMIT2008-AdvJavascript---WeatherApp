@@ -9,6 +9,7 @@ Handlebars.registerHelper('currentDate', () => {
     return new Date().toLocaleString()
 });
 Handlebars.registerHelper('temperature', (temperatureScale = 'c') => {
+    temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
     if (temperatureScale == 'c')
         return '&#176 C';
     else
@@ -33,7 +34,7 @@ const displayWeather = (data, el) => {
 */
 document.querySelector('.frm.weather').addEventListener('submit', (e) => {
     e.preventDefault();
-    let temperatureScale = 'c'
+    let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
     let location = e.target.querySelector('[name=location]').value,
         query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="${temperatureScale}"&format=json&env=store/datatables.org/alltableswithkeys`;
 

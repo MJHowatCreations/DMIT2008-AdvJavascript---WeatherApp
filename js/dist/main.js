@@ -14,7 +14,7 @@
     return new Date().toLocaleString();
   });
   Handlebars.registerHelper('temperature', function () {
-    var temperatureScale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'f';
+    var temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
     if (temperatureScale == 'c') return '°C';else return '°F';
   });
   /**
@@ -35,7 +35,7 @@
 
   document.querySelector('.frm.weather').addEventListener('submit', function (e) {
     e.preventDefault();
-    var temperatureScale = 'c';
+    var temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
     var location = e.target.querySelector('[name=location]').value,
         query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temperatureScale, "\"&format=json&env=store/datatables.org/alltableswithkeys");
     fetch("https://query.yahooapis.com/v1/public/yql?q=".concat(query)).then(function (data) {
