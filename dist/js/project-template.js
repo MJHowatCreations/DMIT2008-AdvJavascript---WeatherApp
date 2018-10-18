@@ -35,7 +35,7 @@ templates['project'] = template({"1":function(container,depth0,helpers,partials,
     + alias2(alias1(((stack1 = (depth0 != null ? depth0.astronomy : depth0)) != null ? stack1.sunrise : stack1), depth0))
     + "</div>\r\n    <div>Sunset: "
     + alias2(alias1(((stack1 = (depth0 != null ? depth0.astronomy : depth0)) != null ? stack1.sunset : stack1), depth0))
-    + "</div>\r\n    <div>\r\n      <ul>\r\n"
+    + "</div>\r\n    <div class=\"forecast\">\r\n      <ul>\r\n"
     + ((stack1 = helpers.each.call(alias3,((stack1 = (depth0 != null ? depth0.item : depth0)) != null ? stack1.forecast : stack1),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "      </ul>\r\n    </div>  ";
 },"useData":true});

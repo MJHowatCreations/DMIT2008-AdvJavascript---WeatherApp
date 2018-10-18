@@ -14,8 +14,9 @@
     return new Date().toLocaleString();
   });
   Handlebars.registerHelper('temperature', function () {
-    var temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
-    if (temperatureScale == 'c') return '°C';else return '°F';
+    var temperatureScale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'c';
+    temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
+    if (temperatureScale == 'c') return '&#176 C';else return '&#176 F';
   });
   /**
    * Displays the current weather conditions for a given location.

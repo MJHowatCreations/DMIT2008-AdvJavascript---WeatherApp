@@ -9,9 +9,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run-script less-compile && npm run-script handlebar-compile && npm run-script babel-compile",
-    "handlebar-compile": "npx handlebars js/src/template/project.handlebars -f js/dist/project-template.js",
-    "babel-compile": "npx babel js/main.es6.js --watch --out-file js/dist/main.js",
-    "less-compile": "npx lessc less/main.less css/main.css"
+    "handlebar-compile": "npx handlebars src/template/project.handlebars -f dist/js/project-template.js",
+    "babel-compile": "npx babel src/js/main.es6.js --out-file dist/js/main.js",
+    "less-compile": "npx lessc src/less/main.less dist/css/main.css"
   },
   "repository": {
     "type": "git",

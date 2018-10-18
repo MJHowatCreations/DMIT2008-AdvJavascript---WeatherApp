@@ -10,7 +10,7 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
-html {
+   html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
@@ -96,6 +96,63 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+
+//var 
+@background-primary : #E1F9F7;
+@banner : #53DCD0;
+@highlight : #A4EDE6;
+@text-primary : #111; 
+
+.mixin-margin-bottom{
+    margin-bottom:0.5rem;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+    margin: 0 auto;
+    color: @text-primary;
+    background-color: @background-primary;
+}
+.weather{
+    display:flex;
+    padding:2rem 10% 2rem 10%;
+    justify-content: flex-start;
+    background-color: @banner;
+    & > label{
+        margin-right: 0.5rem;
+    }
+    & > input{
+        margin-right: 0.5rem;
+    }
+    & > .temperature{
+        margin-left: auto;
+        & > input{
+            margin-left: 2rem;
+        }
+    }
+
+}
+.weather-display{
+    width: 40%;
+    margin:0 auto;
+    & > div{
+        .mixin-margin-bottom();
+        & > ul > li {
+            border-bottom: 1px solid @text-primary;
+            list-style-type: none;           
+        }
+        & > ul> li:nth-child(even){
+            background-color: @highlight;
+        }
+
+
+    }
+
+
+
+}
+
 
 
 
