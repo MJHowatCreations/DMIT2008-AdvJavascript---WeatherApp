@@ -11,9 +11,9 @@ Handlebars.registerHelper('currentDate', () => {
 Handlebars.registerHelper('temperature', (temperatureScale = 'c') => {
     temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
     if (temperatureScale == 'c')
-        return '&#176 C';
+        return '°C';
     else
-        return '&#176 F';
+        return '°F';
 
 });
 
