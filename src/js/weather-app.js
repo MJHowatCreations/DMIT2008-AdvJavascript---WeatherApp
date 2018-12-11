@@ -15,23 +15,27 @@ class WeatherApp extends React.Component{
             date: this.props.date, 
             highTemp: this.props.high, 
             lowTemp: this.props.low,
-            temperature: this.props.temperature
+            temperature: this.props.temperature,
+            displayCurrentTemp: this.state.currentTemp + " " + this.state.temperature,
+            displayDate: this.state.day + " " + this.state.date,
+            displayHigh: this.state.highTemp + " " + this.state.temperature,
+            displayLow: this.state.lowTemp + " " + this.state.temperature
         }
     }
     render () {
         return (
             <div>
             <h1>Weather Update</h1>
-            <div>Location: {location.city}, {location.region}</div>
-            <div>Date: {currentDate}</div>
-            <div>Conditions: {item.condition.text}</div>
-            <div>Current Temp: {item.condition.temp} {temperature}</div>
-            <div>Sunrise: {astronomy.sunrise}</div>
-            <div>Sunset: {astronomy.sunset}</div>
+            <div>Location: {this.state.city}, {this.state.region}</div>
+            <div>Date: {this.statecurrentDate}</div>
+            <div>Conditions: {this.state.condition}</div>
+            <div>Current Temp: {this.state.displayCurrentTemp}</div>
+            <div>Sunrise: {this.state.sunrise}</div>
+            <div>Sunset: {this.state.sunset}</div>
             <div class="forecast">
             {/* for loop per forecast */}
               <ul>
-                <li>{day} {date} : hi | {high} {temperature}, low | {low} {temperature}</li>
+                <li>{this.state.displayDate} : hi | {this.state.displayHigh}, low | {this.state.displayLow}</li>
               </ul>
             </div>
             </div>  
