@@ -8,8 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run-script less-compile && npm run-script handlebar-compile && npm run-script babel-compile",
-    "handlebar-compile": "npx handlebars src/template/project.handlebars -f dist/js/project-template.js",
+    "build": "npm run-script less-compile && npm run-script babel-compile",
     "babel-compile": "npx babel src/js/main.es6.js --out-file dist/js/main.js",
     "less-compile": "npx lessc src/less/main.less dist/css/main.css"
   },
@@ -28,16 +27,18 @@
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
-    "babel-plugin-iife-wrap": "^1.1.0",
-    "handlebars": "^4.0.12",
+    "@babel/preset-react": "^7.0.0",
     "less": "^3.8.1"
   },
   "babel": {
     "presets": [
-      "@babel/preset-env"
-    ],
-    "plugins": [
-      "iife-wrap"
+      [
+        "@babel/preset-env",
+        {
+          "modules": false
+        }
+      ],
+      "@babel/preset-react"
     ]
   }
 }

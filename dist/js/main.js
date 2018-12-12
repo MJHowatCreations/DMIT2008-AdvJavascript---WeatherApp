@@ -1,122 +1,115 @@
-;
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-(function () {
-  "use strict";
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  /**
-   * Simple weather display application for demonstrating AJAX for JSON and
-   * best practices for JavaScript development.  The script makes use of the 
-   * Yahoo! weather API.
-   *
-   *
-   */
-  Handlebars.registerHelper('currentDate', function () {
-    return new Date().toLocaleString();
-  });
-  Handlebars.registerHelper('temperature', function () {
-    var temperatureScale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'c';
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+import WeatherApp from "./weather-app.js";
+import WeatherForm from "./weather-form.js";
+/**
+ * Simple weather display application for demonstrating AJAX for JSON and
+ * best practices for JavaScript development.  The script makes use of the 
+ * Yahoo! weather API.
+ *
+ *
+ */
+
+/* Handlebars.registerHelper('currentDate', () => {
+    return new Date().toLocaleString()
+});
+Handlebars.registerHelper('temperature', (temperatureScale = 'c') => {
     temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
-    if (temperatureScale == 'c') return '°C';else return '°F';
-  });
-  /**
-   * Displays the current weather conditions for a given location.
-   * @param {Object} data - The weather data object.
-   * @param {{String}} el - The location we are appending the display weather to.
-   *
-   **/
+    if (temperatureScale == 'c')
+        return '°C';
+    else
+        return '°F';
 
-  var displayWeather = function displayWeather(data, el) {
-    el.innerHTML = Handlebars.templates['project'](data);
-  };
-  /**
-   * Grabs the text from the input and makes a Yahoo API request string then creates a AJAX request
-   * @param {Object} e - The default form submission event
-  */
+}); */
 
+var MainApp =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MainApp, _React$Component);
 
-  document.querySelector('.frm.weather').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
-    var location = e.target.querySelector('[name=location]').value,
-        query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temperatureScale, "\"&format=json&env=store/datatables.org/alltableswithkeys");
-    fetch("https://query.yahooapis.com/v1/public/yql?q=".concat(query)).then(function (data) {
-      return data.json();
-    }) // see Response.json() in the Fetch API spec
-    .then(function (json) {
-      json = json.query.results.channel;
-      displayWeather(json, document.querySelector('.weather-display'));
-    });
-  });
-  /**
-   * Displays a weather forecast for a given location.
-   * @param {Object[]} data - The array of forecast weather objects.
-   * @param {Object} location - The location to display weather data.
-  */
+  function MainApp(props) {
+    var _this;
 
-  /*
-  const displayForecast = (data, location) => {
-      let output = '<ul>';
-  
-      for (let i = 0, len = data.length; i < len; i += 1) {
-          const   {day, date, high, low} = data[i];
-          output += `<li>${day} ${date} : hi | ${high}, low | ${low}</li>`;
-      }
-      output += '</ul>';
-      location.innerHTML = output;
+    _classCallCheck(this, MainApp);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MainApp).call(this, props));
+    _this.state = {
+      isLoaded: false,
+      temperature: "c",
+      json: null,
+      error: null
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
   }
-  */
 
-  /**
-   * An explict usage of Promises
-   * @param {String} url - The ajax request string 
-  */
+  _createClass(MainApp, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
 
-  /*
-  const fetchJSON = (url) => {
-      return new Promise((resolve, reject) => {
-          let xhr = new XMLHttpRequest();
-          xhr.addEventListener('load', (evt) => {
-              switch (xhr.status) {
-                  case 200:
-                      try{
-                          resolve(JSON.parse(xhr.responseText));
-                      } catch (err) {
-                          let e = new Error(`Could not parse result: ${err}.`)
-                          reject(e);
-                      }
-                      break;
-                  default:
-                      reject(`Error retrieving user data: ${xhr.status} - ${xhr.statusText}.`);
-              }
-          });
-          xhr.addEventListener('error', (evt) => {
-              reject('Error retrieving user data.');
-          });
-          xhr.open('get', url);
-          xhr.send(null);
+      var temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
+      var location = e.target.querySelector('[name=location]').value,
+          query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temperatureScale, "\"&format=json&env=store/datatables.org/alltableswithkeys");
+      fetch("https://query.yahooapis.com/v1/public/yql?q=".concat(query)).then(function (data) {
+        return data.json();
+      }) // see Response.json() in the Fetch API spec
+      .then(function (result) {
+        result = result.query.results.channel;
+
+        _this2.setState({
+          isLoaded: true,
+          json: result
+        });
+      }, function (error) {
+        _this2.setState({
+          isLoaded: false,
+          error: error
+        });
       });
-  };
-  */
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$state = this.state,
+          error = _this$state.error,
+          isLoaded = _this$state.isLoaded,
+          json = _this$state.json;
+      var msg = "";
 
-  /*
-  const displayWeather = (data, showForecast) => {
-      const   loc = document.querySelector('.details>.location'),
-              date = document.querySelector('.details>.date'),
-              conditions = document.querySelector('.details>.conditions'),
-              temp = document.querySelector('.details>.temp'),
-              sunrise = document.querySelector('.details>.sunrise'),
-              sunset = document.querySelector('.details>.sunset'),
-              forecast = document.querySelector('.forecast');
-  
-      // display the current weather data
-  
-      loc.innerHTML = `${data.location.city}, ${data.location.region}`;
-      date.innerHTML = `${new Date().toLocaleString()}`
-      conditions.innerHTML = `${data.item.condition.text}`;
-      temp.innerHTML = `${data.item.condition.temp}&#176 C`;
-      sunrise.innerHTML =`${data.astronomy.sunrise}`;
-      sunset.innerHTML = `${data.astronomy.sunset}`;
-  }
-  
-  */
-})();
+      if (error) {
+        msg = error.message; // return <div>Error: {error.message}</div>;
+      } else if (!isLoaded) {
+        msg = "Loading..."; // return <div>Loading...</div>;
+      }
+
+      return React.createElement("div", null, React.createElement("div", null, React.createElement(WeatherForm, null)), React.createElement("div", null, React.createElement("h3", null, msg), React.createElement(WeatherApp, {
+        props: this.state.json,
+        temperature: this.state.temperature
+      })));
+    }
+  }]);
+
+  return MainApp;
+}(React.Component); // 
+
+
+ReactDOM.render(React.createElement(MainApp, null), document.querySelector('body')); // document.querySelector('.frm.weather').addEventListener('submit', (e) => {
+//     e.preventDefault();
+// });

@@ -5,21 +5,14 @@ class WeatherApp extends React.Component{
         this.state = {
             city: this.props.location.city,
             region: this.props.location.region,
-            currentDate: this.props.currentDate,
+            currentDate: new Date().toLocaleString(),
             condition: this.props.item.condition.text,
             currentTemp: this.props.item.condition.temp,
             sunset: this.props.astronomy.sunset,
             sunrise: this.props.astronomy.sunrise,
             forecast: this.props.forecast,
-            day: this.props.day,
-            date: this.props.date, 
-            highTemp: this.props.high, 
-            lowTemp: this.props.low,
             temperature: this.props.temperature,
-            displayCurrentTemp: this.state.currentTemp + " " + this.state.temperature,
-            displayDate: this.state.day + " " + this.state.date,
-            displayHigh: this.state.highTemp + " " + this.state.temperature,
-            displayLow: this.state.lowTemp + " " + this.state.temperature
+            displayCurrentTemp: this.state.currentTemp + " " + this.state.temperature
         }
     }
     render () {
@@ -33,10 +26,11 @@ class WeatherApp extends React.Component{
             <div>Sunrise: {this.state.sunrise}</div>
             <div>Sunset: {this.state.sunset}</div>
             <div class="forecast">
-            {/* for loop per forecast */}
-              <ul>
-                <li>{this.state.displayDate} : hi | {this.state.displayHigh}, low | {this.state.displayLow}</li>
-              </ul>
+            <ul>            
+                {this.state.forecast.map((item) => 
+                    <li>{item.day} {item.date} : hi | {item.high} {this.state.temperature}, low | {item.low} {this.state.temperature}</li>
+                )}
+            </ul>
             </div>
             </div>  
         );

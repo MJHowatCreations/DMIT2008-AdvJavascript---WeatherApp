@@ -21,7 +21,7 @@
     <input type="text" id="location" name="location">
     <button type="submit">Get Weather</button>
     <fieldset class="frm temperature">
-        <input type="radio" name="temperature" value="c"/>Celsius
+        <input type="radio" name="temperature" value="c" checked/>Celsius
         <input type="radio" name="temperature" value="f"/>Fahrenheit
     </fieldset>
   </form>
@@ -40,11 +40,9 @@
   <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-
-  <script src="dist/js/vendor/handlebars.runtime-v4.0.12.js"></script>
-  <script src="dist/js/project-template.js"></script>  
+  
   <script src="dist/js/plugins.js"></script>
-  <script src="dist/js/main.js"></script>
+  <script type="module" src="dist/js/main.js"></script>
 </body>
 
 </html>
