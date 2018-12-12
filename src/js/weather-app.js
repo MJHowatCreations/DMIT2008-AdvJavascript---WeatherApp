@@ -42,3 +42,5 @@ class WeatherApp extends React.Component{
         );
     }
 }
+
+export default WeatherApp;
