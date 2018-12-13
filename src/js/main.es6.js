@@ -29,8 +29,8 @@ class MainApp extends React.Component{
            json: null,
            error: null,
            location: "edmonton", //e.target.querySelector('[name=location]').value,
-           query: `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="${temperatureScale}"&format=json&env=store/datatables.org/alltableswithkeys`,
-           fullQuery: `https://query.yahooapis.com/v1/public/yql?q=${query}`
+           query: `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${this.state.location}") and u="${this.state.temperature}"&format=json&env=store/datatables.org/alltableswithkeys`,
+           fullQuery: `https://query.yahooapis.com/v1/public/yql?q=${this.state.query}`
        }
        this.queryWeatherForm = this.queryWeatherForm.bind(this);
    }

@@ -56,8 +56,8 @@ function (_React$Component) {
       error: null,
       location: "edmonton",
       //e.target.querySelector('[name=location]').value,
-      query: "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temperatureScale, "\"&format=json&env=store/datatables.org/alltableswithkeys"),
-      fullQuery: "https://query.yahooapis.com/v1/public/yql?q=".concat(query)
+      query: "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(_this.state.location, "\") and u=\"").concat(_this.state.temperature, "\"&format=json&env=store/datatables.org/alltableswithkeys"),
+      fullQuery: "https://query.yahooapis.com/v1/public/yql?q=".concat(_this.state.query)
     };
     _this.queryWeatherForm = _this.queryWeatherForm.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
