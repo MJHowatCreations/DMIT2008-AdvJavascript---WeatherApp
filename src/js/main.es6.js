@@ -80,7 +80,7 @@ class MainApp extends React.Component{
 
 
 // 
-ReactDOM.render(<MainApp/>, document.querySelector('body'));
+ReactDOM.render(<MainApp/>, document.querySelector('.react-app'));
         
 
 

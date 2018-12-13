@@ -110,6 +110,6 @@ function (_React$Component) {
 }(React.Component); // 
 
 
-ReactDOM.render(React.createElement(MainApp, null), document.querySelector('body')); // document.querySelector('.frm.weather').addEventListener('submit', (e) => {
+ReactDOM.render(React.createElement(MainApp, null), document.querySelector('.react-app')); // document.querySelector('.frm.weather').addEventListener('submit', (e) => {
 //     e.preventDefault();
 // });
