@@ -27,31 +27,40 @@ function (_React$Component) {
     _classCallCheck(this, WeatherApp);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(WeatherApp).call(this, props));
-    _this.state = {
-      city: _this.props.location.city,
-      region: _this.props.location.region,
-      currentDate: new Date().toLocaleString(),
-      condition: _this.props.item.condition.text,
-      currentTemp: _this.props.item.condition.temp,
-      sunset: _this.props.astronomy.sunset,
-      sunrise: _this.props.astronomy.sunrise,
-      forecast: _this.props.forecast,
-      temperature: _this.props.temperature,
-      displayCurrentTemp: _this.state.currentTemp + " " + _this.state.temperature
-    };
+
+    if (props) {
+      _this.state = {
+        currentDate: new Date().toLocaleString(),
+        // city: this.props.location.city,
+        // region: this.props.location.region,
+        // condition: this.props.item.condition.text,
+        // currentTemp: this.props.item.condition.temp,
+        // sunset: this.props.astronomy.sunset,
+        // sunrise: this.props.astronomy.sunrise,
+        // forecast: this.props.forecast,
+        // temperature: this.props.temperature,
+        // displayCurrentTemp: this.state.currentTemp + " " + this.state.temperature
+        city: "this.props.location.city",
+        region: "this.props.location.region",
+        condition: "this.props.item.condition.text",
+        currentTemp: "this.props.item.condition.temp",
+        sunset: "this.props.astronomy.sunset",
+        sunrise: "this.props.astronomy.sunrise",
+        forecast: "this.props.forecast",
+        temperature: "this.props.temperature",
+        displayCurrentTemp: "this.state.currentTemp" + " " + "this.state.temperature"
+      };
+    }
+
     return _this;
   }
 
   _createClass(WeatherApp, [{
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       return React.createElement("div", null, React.createElement("h1", null, "Weather Update"), React.createElement("div", null, "Location: ", this.state.city, ", ", this.state.region), React.createElement("div", null, "Date: ", this.statecurrentDate), React.createElement("div", null, "Conditions: ", this.state.condition), React.createElement("div", null, "Current Temp: ", this.state.displayCurrentTemp), React.createElement("div", null, "Sunrise: ", this.state.sunrise), React.createElement("div", null, "Sunset: ", this.state.sunset), React.createElement("div", {
-        class: "forecast"
-      }, React.createElement("ul", null, this.state.forecast.map(function (item) {
-        return React.createElement("li", null, item.day, " ", item.date, " : hi | ", item.high, " ", _this2.state.temperature, ", low | ", item.low, " ", _this2.state.temperature);
-      }))));
+        className: "forecast"
+      }, React.createElement("ul", null)));
     }
   }]);
 
