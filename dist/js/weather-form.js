@@ -29,7 +29,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(WeatherForm).call(this, props));
     _this.state = {
       location: "",
-      temp: "c"
+      temperature: "c"
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -39,14 +39,16 @@ function (_React$Component) {
   _createClass(WeatherForm, [{
     key: "handleSubmit",
     value: function handleSubmit(evt) {
-      evt.preventDefault();
-      console.log(this.state.location + ":" + this.state.temp);
+      evt.preventDefault(); // console.log("Submit: " + this.state.location + ":" + this.state.temp);
+      // console.log(this.state);
+
       this.props.submitListener(this.state);
     }
   }, {
     key: "handleChange",
     value: function handleChange(evt) {
-      console.log("YAAAAA changed ".concat(evt.target.id));
+      // console.log(`YAAAAA changed ${evt.target.id}`);
+      // console.log(`Value was ${evt.target.value}`);
       var obj = {};
       obj[evt.target.getAttribute('name')] = evt.target.value;
       this.setState(obj);
@@ -71,17 +73,24 @@ function (_React$Component) {
         className: "frm temperature"
       }, React.createElement("input", {
         type: "radio",
+        id: "temperature",
         name: "temperature",
         onChange: this.handleChange,
         value: "c",
+        defaultChecked: true,
         text: "Celsius"
-      }), React.createElement("input", {
+      }), React.createElement("label", {
+        htmlFor: "temperature"
+      }, "Celsius"), React.createElement("input", {
         type: "radio",
+        id: "temperature",
         name: "temperature",
         onChange: this.handleChange,
         value: "f",
         text: "Fahrenheit"
-      }))));
+      }), React.createElement("label", {
+        htmlFor: "temperature"
+      }, "Fahrenheit"))));
     }
   }]);
 

@@ -3,18 +3,20 @@ class WeatherForm extends React.Component{
         super(props);
         this.state = {
             location: "",
-            temp: "c"
+            temperature: "c"
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
     handleSubmit(evt) {
         evt.preventDefault();
-        console.log(this.state.location + ":" + this.state.temp);
+        // console.log("Submit: " + this.state.location + ":" + this.state.temp);
+        // console.log(this.state);
         this.props.submitListener(this.state);
     }
     handleChange(evt){
-        console.log(`YAAAAA changed ${evt.target.id}`);
+        // console.log(`YAAAAA changed ${evt.target.id}`);
+        // console.log(`Value was ${evt.target.value}`);
         let obj = {};
         obj[evt.target.getAttribute('name')] = evt.target.value;
         this.setState(obj);
@@ -27,8 +29,10 @@ class WeatherForm extends React.Component{
                     <input type="text" id="location" name="location" onChange={this.handleChange}/>
                     <button onClick={this.handleSubmit} type="submit">Get Weather</button>
                     <fieldset className="frm temperature">
-                        <input type="radio" name="temperature" onChange={this.handleChange} value="c" text="Celsius" />
-                        <input type="radio" name="temperature" onChange={this.handleChange} value="f" text="Fahrenheit" />
+                        <input type="radio" id="temperature" name="temperature" onChange={this.handleChange} value="c" defaultChecked text="Celsius" />
+                        <label htmlFor="temperature">Celsius</label>
+                        <input type="radio" id="temperature" name="temperature" onChange={this.handleChange} value="f" text="Fahrenheit" />
+                        <label htmlFor="temperature">Fahrenheit</label>
                     </fieldset>
                 </form>
             </div>

@@ -54,19 +54,32 @@ function (_React$Component) {
       temperature: "c",
       json: null,
       error: null,
-      location: "edmonton",
-      //e.target.querySelector('[name=location]').value,
-      query: "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temperatureScale, "\"&format=json&env=store/datatables.org/alltableswithkeys"),
-      fullQuery: "https://query.yahooapis.com/v1/public/yql?q=".concat(query)
+      location: "edmonton"
     };
     _this.queryWeatherForm = _this.queryWeatherForm.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.buildQuery = _this.buildQuery.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(MainApp, [{
+    key: "buildQuery",
+    value: function buildQuery(location, temp) {
+      console.log(location + ":" + temp);
+      var query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temp, "\"&format=json&env=store/datatables.org/alltableswithkeys"),
+          fullQuery = "https://query.yahooapis.com/v1/public/yql?q=".concat(query);
+      console.log("Query: ".concat(query));
+      console.log("Full: ".concat(fullQuery));
+      return fullQuery;
+    }
+  }, {
     key: "queryWeatherForm",
     value: function queryWeatherForm(query) {
-      console.log(query.location + ":" + query.temp);
+      console.log(query.location + ":" + query.temperature);
+      console.log(this.state);
+      this.setState({
+        location: query.location,
+        temperature: query.temperature
+      });
     }
   }, {
     key: "componentDidMount",
@@ -74,11 +87,12 @@ function (_React$Component) {
       var _this2 = this;
 
       // let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
-      fetch(this.state.fullQuery).then(function (data) {
+      fetch(this.buildQuery(this.state.location, this.state.temperature)).then(function (data) {
         return data.json();
       }) // see Response.json() in the Fetch API spec
       .then(function (result) {
         result = result.query.results.channel;
+        console.log(result);
 
         _this2.setState({
           isLoaded: true,

@@ -28,23 +28,37 @@ class MainApp extends React.Component{
            temperature: "c",
            json: null,
            error: null,
-           location: "edmonton", //e.target.querySelector('[name=location]').value,
-           query: `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${this.state.location}") and u="${this.state.temperature}"&format=json&env=store/datatables.org/alltableswithkeys`,
-           fullQuery: `https://query.yahooapis.com/v1/public/yql?q=${this.state.query}`
+           location: "edmonton"
        }
        this.queryWeatherForm = this.queryWeatherForm.bind(this);
+       this.buildQuery = this.buildQuery.bind(this);
+       
+   }
+    buildQuery(location,temp){
+        console.log(location +":"+temp);
+        let query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="${temp}"&format=json&env=store/datatables.org/alltableswithkeys`,
+        fullQuery = `https://query.yahooapis.com/v1/public/yql?q=${query}`;
+        console.log(`Query: ${query}`);
+        console.log(`Full: ${fullQuery}`);
+        return fullQuery;
    }
    queryWeatherForm(query){
-       console.log(query.location + ":" + query.temp);
+       console.log(query.location + ":" + query.temperature);
+       console.log(this.state);
+       this.setState({
+            location: query.location,
+            temperature: query.temperature
+       })
    }
    componentDidMount() {
         // let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
         
-        fetch(this.state.fullQuery)
+        fetch(this.buildQuery(this.state.location, this.state.temperature))
             .then(data => data.json()) // see Response.json() in the Fetch API spec
             .then(
                 (result) => {
                     result = result.query.results.channel;
+                    console.log(result);
                     this.setState({
                         isLoaded: true,
                         json: result

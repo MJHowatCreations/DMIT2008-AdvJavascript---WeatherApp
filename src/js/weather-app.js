@@ -2,17 +2,28 @@
 class WeatherApp extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-            city: this.props.location.city,
-            region: this.props.location.region,
-            currentDate: new Date().toLocaleString(),
-            condition: this.props.item.condition.text,
-            currentTemp: this.props.item.condition.temp,
-            sunset: this.props.astronomy.sunset,
-            sunrise: this.props.astronomy.sunrise,
-            forecast: this.props.forecast,
-            temperature: this.props.temperature,
-            displayCurrentTemp: this.state.currentTemp + " " + this.state.temperature
+        if (props){
+            this.state = {
+                currentDate: new Date().toLocaleString(),
+                // city: this.props.location.city,
+                // region: this.props.location.region,
+                // condition: this.props.item.condition.text,
+                // currentTemp: this.props.item.condition.temp,
+                // sunset: this.props.astronomy.sunset,
+                // sunrise: this.props.astronomy.sunrise,
+                // forecast: this.props.forecast,
+                // temperature: this.props.temperature,
+                // displayCurrentTemp: this.state.currentTemp + " " + this.state.temperature
+                city: "this.props.location.city",
+                region: "this.props.location.region",
+                condition: "this.props.item.condition.text",
+                currentTemp: "this.props.item.condition.temp",
+                sunset: "this.props.astronomy.sunset",
+                sunrise: "this.props.astronomy.sunrise",
+                forecast: "this.props.forecast",
+                temperature: "this.props.temperature",
+                displayCurrentTemp: "this.state.currentTemp" + " " + "this.state.temperature"
+            }
         }
     }
     render () {
@@ -25,11 +36,11 @@ class WeatherApp extends React.Component{
             <div>Current Temp: {this.state.displayCurrentTemp}</div>
             <div>Sunrise: {this.state.sunrise}</div>
             <div>Sunset: {this.state.sunset}</div>
-            <div class="forecast">
+            <div className="forecast">
             <ul>            
-                {this.state.forecast.map((item) => 
+                {/* {this.state.forecast.map((item) => 
                     <li>{item.day} {item.date} : hi | {item.high} {this.state.temperature}, low | {item.low} {this.state.temperature}</li>
-                )}
+                )} */}
             </ul>
             </div>
             </div>  
