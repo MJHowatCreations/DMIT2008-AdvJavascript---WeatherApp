@@ -53,21 +53,28 @@ function (_React$Component) {
       isLoaded: false,
       temperature: "c",
       json: null,
-      error: null
+      error: null,
+      location: "edmonton",
+      //e.target.querySelector('[name=location]').value,
+      query: "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temperatureScale, "\"&format=json&env=store/datatables.org/alltableswithkeys"),
+      fullQuery: "https://query.yahooapis.com/v1/public/yql?q=".concat(query)
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.queryWeatherForm = _this.queryWeatherForm.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(MainApp, [{
+    key: "queryWeatherForm",
+    value: function queryWeatherForm(query) {
+      console.log(query.location + ":" + query.temp);
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
-      var temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
-      var location = e.target.querySelector('[name=location]').value,
-          query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temperatureScale, "\"&format=json&env=store/datatables.org/alltableswithkeys");
-      fetch("https://query.yahooapis.com/v1/public/yql?q=".concat(query)).then(function (data) {
+      // let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
+      fetch(this.state.fullQuery).then(function (data) {
         return data.json();
       }) // see Response.json() in the Fetch API spec
       .then(function (result) {
@@ -99,7 +106,9 @@ function (_React$Component) {
         msg = "Loading..."; // return <div>Loading...</div>;
       }
 
-      return React.createElement("div", null, React.createElement("div", null, React.createElement(WeatherForm, null)), React.createElement("div", null, React.createElement("h3", null, msg), React.createElement(WeatherApp, {
+      return React.createElement("div", null, React.createElement("div", null, React.createElement(WeatherForm, {
+        submitListener: this.queryWeatherForm
+      })), React.createElement("div", null, React.createElement("h3", null, msg), React.createElement(WeatherApp, {
         props: this.state.json,
         temperature: this.state.temperature
       })));

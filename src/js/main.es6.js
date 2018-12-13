@@ -27,16 +27,20 @@ class MainApp extends React.Component{
            isLoaded: false,
            temperature: "c",
            json: null,
-           error: null
+           error: null,
+           location: "edmonton", //e.target.querySelector('[name=location]').value,
+           query: `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="${temperatureScale}"&format=json&env=store/datatables.org/alltableswithkeys`,
+           fullQuery: `https://query.yahooapis.com/v1/public/yql?q=${query}`
        }
-       this.handleSubmit = this.handleSubmit.bind(this);
+       this.queryWeatherForm = this.queryWeatherForm.bind(this);
+   }
+   queryWeatherForm(query){
+       console.log(query.location + ":" + query.temp);
    }
    componentDidMount() {
-        let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
-        let location = e.target.querySelector('[name=location]').value,
-            query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="${temperatureScale}"&format=json&env=store/datatables.org/alltableswithkeys`;
-
-        fetch(`https://query.yahooapis.com/v1/public/yql?q=${query}`)
+        // let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
+        
+        fetch(this.state.fullQuery)
             .then(data => data.json()) // see Response.json() in the Fetch API spec
             .then(
                 (result) => {
@@ -67,7 +71,7 @@ class MainApp extends React.Component{
         return(
             <div>
                 <div>
-                    <WeatherForm/>
+                    <WeatherForm submitListener={this.queryWeatherForm}/>
                 </div>                
                 <div>
                     <h3>{msg}</h3>
