@@ -8,8 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run-script less-compile && npm run-script babel-compile",
+    "build": "npm run-script less-compile && npm run-script babel-compile && npm run-script compile",
     "babel-compile": "npx babel src/js/main.es6.js --out-file dist/js/main.js",
+    "compile": "npx babel src/js/ --out-dir dist/js/",
     "less-compile": "npx lessc src/less/main.less dist/css/main.css"
   },
   "repository": {
