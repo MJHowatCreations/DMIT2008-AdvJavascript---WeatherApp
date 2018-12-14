@@ -25,52 +25,50 @@ class MainApp extends React.Component{
        super(props);
        this.state = {
            isLoaded: false,
-           temperature: "c",
            json: null,
            error: null,
-           location: "edmonton"
+           temperature: '°C'
        }
        this.queryWeatherForm = this.queryWeatherForm.bind(this);
-       this.buildQuery = this.buildQuery.bind(this);
+       this.fetchWeather = this.fetchWeather.bind(this);
        
    }
-    buildQuery(location,temp){
-        console.log(location +":"+temp);
-        let query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="${temp}"&format=json&env=store/datatables.org/alltableswithkeys`,
-        fullQuery = `https://query.yahooapis.com/v1/public/yql?q=${query}`;
-        console.log(`Query: ${query}`);
-        console.log(`Full: ${fullQuery}`);
-        return fullQuery;
-   }
    queryWeatherForm(query){
-       console.log(query.location + ":" + query.temperature);
-       console.log(this.state);
-       this.setState({
-            location: query.location,
-            temperature: query.temperature
-       })
+    let temp = "";
+    if (query.temperature == 'c')
+        temp = '°C';
+    else
+        temp = '°F';
+    this.setState({
+        temperature: temp
+    })
+    this.fetchWeather(query.query);
+    console.log(this.state.json);
+    this.forceUpdate();
+   }
+   fetchWeather(query){
+        fetch(query)
+        .then(data => data.json()) // see Response.json() in the Fetch API spec
+        .then(
+            (result) => {
+                result = result.query.results.channel;
+                // console.log(result);
+                this.setState({
+                    isLoaded: true,
+                    json: result
+                });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: false,
+                    error
+                });
+            }
+        );
    }
    componentDidMount() {
         // let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
         
-        fetch(this.buildQuery(this.state.location, this.state.temperature))
-            .then(data => data.json()) // see Response.json() in the Fetch API spec
-            .then(
-                (result) => {
-                    result = result.query.results.channel;
-                    console.log(result);
-                    this.setState({
-                        isLoaded: true,
-                        json: result
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: false,
-                        error
-                    });
-                }
-            );
    } 
    render() {
         const { error, isLoaded, json } = this.state;
@@ -86,10 +84,11 @@ class MainApp extends React.Component{
             <div>
                 <div>
                     <WeatherForm submitListener={this.queryWeatherForm}/>
+                    <h2><a href="report.html">See the React Report</a></h2>
                 </div>                
                 <div>
                     <h3>{msg}</h3>
-                    <WeatherApp props={this.state.json} temperature={this.state.temperature}/>
+                    <WeatherApp result={this.state.json} temperature={this.state.temperature}/>
                 </div>
             </div>
         );

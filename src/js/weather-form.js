@@ -3,15 +3,28 @@ class WeatherForm extends React.Component{
         super(props);
         this.state = {
             location: "",
-            temperature: "c"
+            temperature: "c",
+            query: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.buildQuery = this.buildQuery.bind(this);
     }
+    buildQuery(location,temp){
+        // console.log(location +":"+temp);
+        let query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="${temp}"&format=json&env=store/datatables.org/alltableswithkeys`,
+        fullQuery = `https://query.yahooapis.com/v1/public/yql?q=${query}`;
+        // console.log(`Query: ${query}`);
+        // console.log(`Full: ${fullQuery}`);
+        return fullQuery;
+   }
     handleSubmit(evt) {
         evt.preventDefault();
         // console.log("Submit: " + this.state.location + ":" + this.state.temp);
         // console.log(this.state);
+        this.setState({
+            query: this.buildQuery(this.state.location,this.state.temperature)
+        })
         this.props.submitListener(this.state);
     }
     handleChange(evt){

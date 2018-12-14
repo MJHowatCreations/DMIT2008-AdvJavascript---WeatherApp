@@ -29,19 +29,34 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(WeatherForm).call(this, props));
     _this.state = {
       location: "",
-      temperature: "c"
+      temperature: "c",
+      query: ""
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.buildQuery = _this.buildQuery.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(WeatherForm, [{
+    key: "buildQuery",
+    value: function buildQuery(location, temp) {
+      // console.log(location +":"+temp);
+      var query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temp, "\"&format=json&env=store/datatables.org/alltableswithkeys"),
+          fullQuery = "https://query.yahooapis.com/v1/public/yql?q=".concat(query); // console.log(`Query: ${query}`);
+      // console.log(`Full: ${fullQuery}`);
+
+      return fullQuery;
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(evt) {
       evt.preventDefault(); // console.log("Submit: " + this.state.location + ":" + this.state.temp);
       // console.log(this.state);
 
+      this.setState({
+        query: this.buildQuery(this.state.location, this.state.temperature)
+      });
       this.props.submitListener(this.state);
     }
   }, {

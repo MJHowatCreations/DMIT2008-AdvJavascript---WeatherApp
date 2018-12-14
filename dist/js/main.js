@@ -51,40 +51,37 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainApp).call(this, props));
     _this.state = {
       isLoaded: false,
-      temperature: "c",
       json: null,
       error: null,
-      location: "edmonton"
+      temperature: '°C'
     };
     _this.queryWeatherForm = _this.queryWeatherForm.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.buildQuery = _this.buildQuery.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.fetchWeather = _this.fetchWeather.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(MainApp, [{
-    key: "buildQuery",
-    value: function buildQuery(location, temp) {
-      var query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temp, "\"&format=json&env=store/datatables.org/alltableswithkeys"),
-          fullQuery = "https://query.yahooapis.com/v1/public/yql?q=".concat(this.state.query);
-      return fullQuery;
-    }
-  }, {
     key: "queryWeatherForm",
     value: function queryWeatherForm(query) {
-      console.log(query.location + ":" + query.temp);
+      var temp = "";
+      if (query.temperature == 'c') temp = '°C';else temp = '°F';
+      this.setState({
+        temperature: temp
+      });
+      this.fetchWeather(query.query);
+      console.log(this.state.json);
+      this.forceUpdate();
     }
   }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
+    key: "fetchWeather",
+    value: function fetchWeather(query) {
       var _this2 = this;
 
-      // let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
-      fetch(this.buildQuery(this.state.location, this.state.temperature)).then(function (data) {
+      fetch(query).then(function (data) {
         return data.json();
       }) // see Response.json() in the Fetch API spec
       .then(function (result) {
-        result = result.query.results.channel;
-        console.log(result);
+        result = result.query.results.channel; // console.log(result);
 
         _this2.setState({
           isLoaded: true,
@@ -96,6 +93,10 @@ function (_React$Component) {
           error: error
         });
       });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {// let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
     }
   }, {
     key: "render",
@@ -114,8 +115,10 @@ function (_React$Component) {
 
       return React.createElement("div", null, React.createElement("div", null, React.createElement(WeatherForm, {
         submitListener: this.queryWeatherForm
-      })), React.createElement("div", null, React.createElement("h3", null, msg), React.createElement(WeatherApp, {
-        props: this.state.json,
+      }), React.createElement("h2", null, React.createElement("a", {
+        href: "report.html"
+      }, "See the React Report"))), React.createElement("div", null, React.createElement("h3", null, msg), React.createElement(WeatherApp, {
+        result: this.state.json,
         temperature: this.state.temperature
       })));
     }
