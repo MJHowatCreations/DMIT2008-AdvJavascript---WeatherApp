@@ -124,6 +124,7 @@ body {
 .report-display {
   width: 50%;
   margin: 0 auto;
+  margin-left: 10rem;
 }
 /* ==========================================================================
    Helper classes
