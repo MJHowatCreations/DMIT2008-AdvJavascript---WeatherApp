@@ -66,9 +66,7 @@ class MainApp extends React.Component{
             }
         );
    }
-   componentDidMount() {
-        // let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
-        
+   componentDidMount() {      
    } 
    render() {
         const { error, isLoaded, json } = this.state;

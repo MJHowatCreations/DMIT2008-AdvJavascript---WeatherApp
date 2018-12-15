@@ -39,18 +39,38 @@
 
       <div>
         <h2>Step 2: Build A Static Version in React</h2>
+        <img src="./dist/img/Mainapp.PNG"/>
+        <img src="./dist/img/Mainapp2.PNG"/>
+        <p>This will be the main app responsible for fetching the json files and rendering the different componets. This is the rendering function which will set up the page.</p>
         <img src="./dist/img/WeatherApp.PNG"/>
-        <p>This will be a display class which is passed a json file from the main app</p>
+        <p>This will be a display class which is passed a json file from the main app. All of the components will be displayed with props.</p>
 
       </div>
       <div>
           <h2>Step 3: Identify The Minimal (but complete) Representation Of UI State</h2>
+          <p>The thinking in React document suggests deciding what state is in this step. It poses three questions to determine if what we are working with is state.</p>
+          <ul>
+              <li>Is it passed in from a parent via props? If so, it probably isn’t state.</li>
+              <li>Does it remain unchanged over time? If so, it probably isn’t state.</li>
+              <li>Can you compute it based on any other state or props in your component? If so, it isn’t state.</li>
+          </ul>
+          <p>With those three things in mind we decided that the weather form will create the query as a state property based on the radio button and the text string</p>
+          <img src="dist/img/weatherform.PNG"/>     
       </div>
       <div>
           <h2>Step 4: Identify Where Your State Should Live</h2>
+          <p>The next part the react docs suggest</p>
+          <ul>
+              <li>Identify every component that renders something based on that state.</li>
+              <li>Find a common owner component (a single component above all the components that need the state in the hierarchy).</li>
+              <li>Either the common owner or another component higher up in the hierarchy should own the state.</li>
+              <li>If you can’t find a component where it makes sense to own the state, create a new component simply for holding the state and add it somewhere in the hierarchy above the common owner component.</li>
+          </ul>
+          <p>The component that displays the information the weather app get its props from the main app. This main app is also the common owner component of the weather form making it the ideal place to holding state.</p>
       </div>
       <div>
           <h2>Step 5: Add Inverse Data Flow</h2>
+          <p>The only part of inverse data flow should be from the form to the main app which will need the radio button and the value of the textbox to perform the correct query.</p>
       </div>
       <div>
           <h2>Additional Notes:</h2>

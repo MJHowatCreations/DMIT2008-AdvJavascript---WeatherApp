@@ -96,8 +96,7 @@ function (_React$Component) {
     }
   }, {
     key: "componentDidMount",
-    value: function componentDidMount() {// let temperatureScale = document.querySelector('input[name="temperature"]:checked').value;
-    }
+    value: function componentDidMount() {}
   }, {
     key: "render",
     value: function render() {

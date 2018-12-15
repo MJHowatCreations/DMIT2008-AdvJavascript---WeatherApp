@@ -41,19 +41,14 @@ function (_React$Component) {
   _createClass(WeatherForm, [{
     key: "buildQuery",
     value: function buildQuery(location, temp) {
-      // console.log(location +":"+temp);
       var query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(temp, "\"&format=json&env=store/datatables.org/alltableswithkeys"),
-          fullQuery = "https://query.yahooapis.com/v1/public/yql?q=".concat(query); // console.log(`Query: ${query}`);
-      // console.log(`Full: ${fullQuery}`);
-
+          fullQuery = "https://query.yahooapis.com/v1/public/yql?q=".concat(query);
       return fullQuery;
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(evt) {
-      evt.preventDefault(); // console.log("Submit: " + this.state.location + ":" + this.state.temp);
-      // console.log(this.state);
-
+      evt.preventDefault();
       this.setState({
         query: this.buildQuery(this.state.location, this.state.temperature)
       });
@@ -62,8 +57,6 @@ function (_React$Component) {
   }, {
     key: "handleChange",
     value: function handleChange(evt) {
-      // console.log(`YAAAAA changed ${evt.target.id}`);
-      // console.log(`Value was ${evt.target.value}`);
       var obj = {};
       obj[evt.target.getAttribute('name')] = evt.target.value;
       this.setState(obj);
